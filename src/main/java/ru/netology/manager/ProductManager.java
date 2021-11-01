@@ -8,17 +8,18 @@ import ru.netology.repository.ProductRepository;
 public class ProductManager {
     ProductRepository repository;
 
-    public ProductManager() {
-        repository = new ProductRepository();
+
+    public ProductManager(ProductRepository repository) {
+        this.repository = repository;
     }
 
     public Product[] searchBy(String text) {
         Product[] result = new Product[0];
-        for (Product product : repository.findAll()) { // в переменную product по очереди засунь все, что есть в items
+        for (Product product: repository.findAll()) { // в переменную product по очереди засунь все, что есть в items
             if (matches(product, text)) {  // если текст есть в product
                 Product[] tmp = new Product[result.length + 1]; // создали массив tmp на 1 больше, чем массив result
                 // используйте System.arraycopy, чтобы скопировать всё из result в tmp:
-                System.arraycopy(result, 0, tmp, 0, result.length);
+                System.arraycopy (result, 0, tmp, 0, result.length);
                 tmp[tmp.length - 1] = product;      //в ппоследний элемент массива tmp положили  product, если совпал результат.
                 result = tmp;                       // результат - массив всех продуктов, у кого совпал с text имя или автор
             }
@@ -26,7 +27,7 @@ public class ProductManager {
         return result;
     }
 
-    public void add(Product product) {
+    public void add(Product product){
         repository.save(product);
     }
 
@@ -41,15 +42,15 @@ public class ProductManager {
             }
             return false;
         }
-        if (product instanceof Smartphone) {                    // если в параметре product лежит объект класса Smartphone
-            Smartphone smartphone = (Smartphone) product;      // положем его в переменную типа Smartphone чтобы пользоваться методами класса Smartphone
-            if (smartphone.getManufacturer().contains(search)) {   // проверим есть ли поисковое слово в данных о производителе
-                return true;
-            }
-            if (smartphone.getName().contains(search)) {
-                return true;
-            }
+    if (product instanceof Smartphone){                    // если в параметре product лежит объект класса Smartphone
+        Smartphone smartphone = (Smartphone) product;      // положем его в переменную типа Smartphone чтобы пользоваться методами класса Smartphone
+        if (smartphone.getManufacturer().contains(search)) {   // проверим есть ли поисковое слово в данных о производителе
+           return true;
         }
+        if (smartphone.getName().contains(search)) {
+            return true;
+        }
+    }
         return false;
 
 
