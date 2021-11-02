@@ -9,6 +9,9 @@ public class ProductRepository {
         this.items = items;
     }
 
+    public ProductRepository() {
+        }
+
     public void save(Product item) {
         int length = items.length + 1;
         Product[] tmp = new Product[length];
